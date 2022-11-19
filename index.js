@@ -34,4 +34,4 @@ function checkUser(req, res, next) {
   res.send("Api Key is either missing or is invalid. " + clientApiKey);
 }
 
-app.listen(process.env.PORT_NUMBER);
+app.listen(PORT);
