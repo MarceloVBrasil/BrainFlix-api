@@ -9,11 +9,7 @@ const api_key = uuidV4();
 const PORT = process.env.PORT || 7865;
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+app.use(cors());
 app.all("*", checkUser);
 app.use("/images", express.static("./public/images"));
 app.use("/videos", videosRouter);
