@@ -32,7 +32,9 @@ function checkUser(req, res, next) {
 
   const clientApiKey = req.query.api_key;
   if (clientApiKey === api_key) return next();
-  res.send("Api Key is either missing or is invalid. " + clientApiKey);
+  res
+    .status(400)
+    .send("Api Key is either missing or is invalid. " + clientApiKey);
 }
 
 app.listen(PORT);
