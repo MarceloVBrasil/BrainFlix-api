@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const videosRouter = require("./routes/videos");
+const { v4: uuidV4 } = require("uuid");
 require("dotenv").config();
 
-const api_key = process.env.API_KEY;
+const api_key = uuidV4();
 const PORT = process.env.PORT || 7865;
 
 app.use(express.json());
