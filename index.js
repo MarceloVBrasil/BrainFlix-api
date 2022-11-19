@@ -1,43 +1,36 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const cors = require("cors");
-const { v4: uuidV4 } = require("uuid");
-const api_key = uuidV4();
+const videosRouter = require("./routes/videos");
+require("dotenv").config();
 
+const api_key = process.env.API_KEY;
+
+app.use(express.json());
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:3000",
   })
 );
-
-const videos = require("./data/video-details.json");
+app.all("*", checkUser);
+app.use("/images", express.static("./public/images"));
+app.use("/videos", videosRouter);
 
 app.get("/register", (req, res) => {
   res.json({ api_key });
 });
 
-app.get("/videos", (req, res) => {
-  const key = req.query.api_key;
-  if (api_key !== key) return res.status(400).send("Bad Request");
-  res.json(
-    videos.map((video) => {
-      return {
-        id: video.id,
-        title: video.title,
-        channel: video.channel,
-        image: video.image,
-      };
-    })
-  );
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
-app.get("/videos/:videoId", (req, res) => {
-  const key = req.query.api_key;
-  if (api_key !== key) return res.status(400).send("Bad Request");
-  const videoId = req.params.videoId;
-  const video = videos.find((video) => video.id === videoId);
-  if (!video)
-    return res.status(404).json({ message: "No video with that id exists" });
-  res.json(video);
-});
+function checkUser(req, res, next) {
+  if (req.path === "/register") return next();
+  if (req.path === "/videos" && req.method === "POST") return next();
 
-app.listen(8080, () => console.log("listening on port 8080"));
+  const clientApiKey = req.query.api_key;
+  if (clientApiKey === api_key) return next();
+  res.send("Api Key is either missing or is invalid. " + clientApiKey);
+}
+
+app.listen(process.env.PORT_NUMBER);
