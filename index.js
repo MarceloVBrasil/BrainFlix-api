@@ -5,7 +5,7 @@ const videosRouter = require("./routes/videos");
 require("dotenv").config();
 
 const api_key = process.env.API_KEY;
-const PORT = process.env.PORT_NUMBER || 7865;
+const PORT = process.env.PORT || 7865;
 
 app.use(express.json());
 app.use(
