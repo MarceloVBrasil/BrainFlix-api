@@ -72,7 +72,7 @@ router.post("/", upload.single("thumbnail"), (req, res) => {
     id: uuidV4(),
     title,
     channel: "Biking  World",
-    image: `http://localhost:${process.env.PORT_NUMBER}/images/${imageName}?api_key=${process.env.API_KEY}`,
+    image: `https://marcelobrasil-brainflix.herokuapp.com/images/${imageName}`,
     description,
     views: "0",
     likes: "0",
