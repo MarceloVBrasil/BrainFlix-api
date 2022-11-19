@@ -5,7 +5,7 @@ const videosRouter = require("./routes/videos");
 const { v4: uuidV4 } = require("uuid");
 require("dotenv").config();
 
-export const api_key = uuidV4();
+const api_key = uuidV4();
 const PORT = process.env.PORT || 7865;
 
 app.use(express.json());
