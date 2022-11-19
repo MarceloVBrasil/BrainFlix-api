@@ -5,7 +5,7 @@ const videosRouter = require("./routes/videos");
 const { v4: uuidV4 } = require("uuid");
 require("dotenv").config();
 
-const api_key = uuidV4();
+export const api_key = uuidV4();
 const PORT = process.env.PORT || 7865;
 
 app.use(express.json());
@@ -28,6 +28,7 @@ app.use((req, res) => {
 
 function checkUser(req, res, next) {
   if (req.path === "/register") return next();
+  if (req.path === "/images") return next();
   if (req.path === "/videos" && req.method === "POST") return next();
 
   const clientApiKey = req.query.api_key;
