@@ -28,7 +28,7 @@ app.use((req, res) => {
 
 function checkUser(req, res, next) {
   if (req.path === "/register") return next();
-  if (req.path === "/images") return next();
+  if (req.path.includes("/images")) return next();
   if (req.path === "/videos" && req.method === "POST") return next();
 
   const clientApiKey = req.query.api_key;
